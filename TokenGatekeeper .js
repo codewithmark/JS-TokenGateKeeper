@@ -52,13 +52,16 @@ class TokenGatekeeper {
     }
 
     try {
+      const formData = new FormData();
+      formData.append('token', this.token);
+
       const res = await fetch(this.tokenUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: this.token })
+        body:formData,
       });
 
       const data = await res.json();
+      console.log(data);
 
       if (data.status === 'success') {
         window.location.href = data.url || this.redirectUrl;
